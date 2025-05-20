@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>診断</title>
+  </head>
+  <body>
+    <div id="quiz"></div>
+    <button id="end-diagnosis" type="button">Lampを探しに行く</button>
+  </body>
+  <script>
+    const questions = [
+      {
+        text: "自分は、誰かの言葉や行動に強く心を動かされることがある",
+        category: "共鳴型",
+      },
+      {
+        text: "「なぜそうなるのか」を知りたくなることが多い",
+        category: "探究型",
+      },
+      {
+        text: "自分のアイデアや想いを言葉や形にして誰かに伝えるのが好きだ",
+        category: "表現型",
+      },
+      {
+        text: "目の前の現場や人の動きを見て「すごい」と感じた時、その場で自分も動きたくなる",
+        category: "体験型",
+      },
+      {
+        text: "「それやったことないな」と思うと、むしろ試したくなる",
+        category: "挑戦型",
+      },
+      {
+        text: "ひとの「想い」や「こだわり」を知ると、応援したくなる",
+        category: "共鳴型",
+      },
+      {
+        text: "自分は、ネットで見た情報よりも「実物を見て感じたこと」を信じるタイプだ",
+        category: "体験型",
+      },
+      {
+        text: "人の「空気感」や「感情」にすぐ気づくことがある（例：声のトーン、顔色、間）",
+        category: "共鳴型",
+      },
+      {
+        text: "分からない言葉や仕組みに出会ったとき、自分で調べたくなる",
+        category: "探究型",
+      },
+      {
+        text: "「これ、やってみたらどうなるだろう」と考えるのが好き",
+        category: "挑戦型",
+      },
+      {
+        text: "誰かの熱い想いを聞くと、自分も心を動かされる",
+        category: "共鳴型",
+      },
+      {
+        text: "1人の時間より、誰かと一緒に動いているときにやる気が出る",
+        category: "共鳴型",
+      },
+      {
+        text: "誰もやっていないことに、真っ先に飛び込みたくなる",
+        category: "挑戦型",
+      },
+      {
+        text: "「普通」と言われると、ちょっと反発したくなる",
+        category: "挑戦型",
+      },
+      { text: "とことん調べたり、知識を深めることが好き", category: "探究型" },
+      { text: "自分だけが知ってる“深い世界”がある", category: "探究型" },
+      {
+        text: "表現すること（書く・描く・話す）が昔から好きだった",
+        category: "表現型",
+      },
+      {
+        text: "感情が乗った表現を見ると、なぜか涙が出たり鳥肌が立つ",
+        category: "表現型",
+      },
+      {
+        text: "音・光・空気感など、現場にいるからこそ感じるものがあると思う",
+        category: "体験型",
+      },
+      { text: "実際に“やってみて”初めて分かることが多い", category: "体験型" },
+    ];
+
+    const choices = [
+      "まったくそう思わない",
+      "あまりそう思わない",
+      "どちらでもない",
+      "ややそう思う",
+      "とてもそう思う",
+    ];
+
+    $(function () {
+      const $quiz = $("#quiz");
+
+      questions.forEach((q, qIndex) => {
+        const $qDiv = $("<div>").addClass("question");
+        const $qText = $("<p>").text(`${qIndex + 1}. ${q.text}`);
+        $qDiv.append($qText);
+
+        choices.forEach((label, scoreIndex) => {
+          const $label = $("<label>");
+          const $input = $("<input>")
+            .attr("type", "radio")
+            .attr("name", `q${qIndex}`)
+            .attr("value", scoreIndex + 1);
+
+          $label.append($input).append(` ${label}`);
+          $qDiv.append($label);
+        });
+
+        $quiz.append($qDiv);
+      });
+    });
+
+    $("#end-diagnosis").on("click", function () {
+      if (!validateForm()) {
+        e.preventDefault();
+        return;
+      }
+    });
+  </script>
+</html>
