@@ -137,11 +137,11 @@
   </body>
   <script>
     const choices = [
-      "とてもそう思う",
-      "ややそう思う",
-      "どちらでもない",
-      "あまりそう思わない",
       "まったくそう思わない",
+      "あまりそう思わない",
+      "どちらでもない",
+      "ややそう思う",
+      "とてもそう思う",
     ];
 
     function showError(selector, message) {
@@ -204,6 +204,17 @@
           scores[category] += value;
           // 4. 該当するタイプのスコアに加算
           console.log(scores);
+
+          const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]); // スコアの降順ソート
+
+          const top1 = sorted[0][0]; // 1位のタイプ名
+          const top2 = sorted[1][0]; // 2位のタイプ名
+
+          localStorage.setItem("top1", top1);
+          localStorage.setItem("top2", top2);
+
+          // 結果ページへ移動
+          window.location.href = "result.html";
         });
       }
     });
