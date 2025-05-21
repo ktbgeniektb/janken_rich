@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400&family=Varela+Round&display=swap');
+
+body {
+    background-image: url(../img/cave.png);
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+section.bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* スクロール時にパララックスっぽく */
+    color: white;
+    padding: 100px 20px;
+    /* 中の質問分の余白 */
+    min-height: 100vh;
+}
+
+/* 各Layerに対応する背景画像 */
+.layer1 {
+    background-image: url('../img/layer1.png');
+}
+
+.layer2 {
+    background-image: url('../img/layer2.png');
+}
+
+.layer3 {
+    background-image: url('../img/layer3.png');
+}
+
+.layer4 {
+    background-image: url('../img/layer4.png');
+}
