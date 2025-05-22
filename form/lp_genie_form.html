@@ -12,6 +12,16 @@
     <!-- <link rel="stylesheet" href="css/style.css" /> -->
     <link rel="stylesheet" href="./../css/style_genie_contact.css" />
 
+    <!-- 電話番号の国際対応 -->
+    <!-- intl-tel-input CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css"
+    />
+    <!-- intl-tel-input JS + utils（バリデーション用）-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+
     <script>
       tailwind.config = {
         theme: {
@@ -39,6 +49,19 @@
       @font-face {
         font-family: "Aladdin";
         src: url("./fonts/Aladdin.ttf") format("truetype");
+      }
+      .intl-tel-input {
+        width: 100% !important;
+      }
+
+      .intl-tel-input .form-control {
+        width: 100% !important;
+        box-sizing: border-box;
+      }
+
+      .iti__country-list {
+        z-index: 9999;
+        max-width: 400px;
       }
     </style>
   </head>
@@ -412,7 +435,7 @@
           // 電話番号バリデーション（ハイフン2つ、携帯・固定両方対応）
           function validatePhone() {
             const phone = $("#phone").val().trim();
-            const hyphenCount = (phone.match(/-/g) || []).length;
+            // const hyphenCount = (phone.match(/-/g) || []).length;
             const mobilePattern = /^0[789]0-\d{4}-\d{4}$/;
             const landlinePattern = /^0\d{1,4}-\d{1,4}-\d{3,4}$/;
 
@@ -433,6 +456,39 @@
               return true;
             }
           }
+
+          window.addEventListener("DOMContentLoaded", function () {
+            const phoneInput = document.querySelector("#phone");
+            const iti = window.intlTelInput(phoneInput, {
+              initialCountry: "jp", // 初期は日本
+              preferredCountries: ["jp", "us", "gb"],
+              utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            });
+
+            // 既存のバリデーションを置き換え
+            function validatePhoneIntl() {
+              if (!iti.isValidNumber()) {
+                showError("#error-phone", "電話番号の形式が正しくありません");
+                return false;
+              }
+              clearError("#error-phone");
+              return true;
+            }
+
+            // フォーム送信前に値をE.164形式に変換
+            document
+              .querySelector("#seminar-form")
+              .addEventListener("submit", function (e) {
+                if (!validatePhoneIntl()) {
+                  e.preventDefault();
+                  phoneInput.focus();
+                  return;
+                }
+                // valueを書き換え
+                phoneInput.value = iti.getNumber();
+              });
+          });
 
           // メールアドレスバリデーション（形式＋危険文字除外）
           function validateEmail() {
