@@ -5,15 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>診断結果</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="./../css/diagnosis.css" />
   </head>
   <body>
-    <h1 id="main-type"></h1>
-    <p id="description"></p>
-    <p id="catch"></p>
-    <ul id="features"></ul>
-    <ul id="moments"></ul>
-    <ul id="tips"></ul>
-    <p id="sub"></p>
+    <section class="result-header">
+      <h1 id="main-type"></h1>
+      <p id="description"></p>
+    </section>
+
+    <section class="result-section">
+      <h2>🔎 特徴</h2>
+      <ul id="features"></ul>
+    </section>
+
+    <section class="result-section">
+      <h2>🌱 ワクワクしやすい瞬間</h2>
+      <ul id="moments"></ul>
+    </section>
+
+    <section class="result-section">
+      <h2>🎯 活かすヒント</h2>
+      <ul id="tips"></ul>
+    </section>
+
+    <section class="result-section">
+      <h2>🔁 あなたの中に、こんな側面も…</h2>
+      <p id="sub"></p>
+    </section>
   </body>
   <script>
     $(function () {
