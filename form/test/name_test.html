@@ -69,7 +69,7 @@
       ];
       // バリデーションルール（例：全角文字＋全角スペース1つまで）
       function validateName(name) {
-        const pattern = /^[\u3040-\u30FF\u4E00-\u9FFF　]{1,19}$/;
+        const pattern = /^[\u3040-\u30FF\u4E00-\u9FFF\u30FB　]{1,19}$/;
         const zenkakuSpaces = (name.match(/　/g) || []).length;
         return pattern.test(name) && zenkakuSpaces <= 1;
       }

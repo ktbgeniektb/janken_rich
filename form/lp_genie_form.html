@@ -397,7 +397,7 @@
           // 名前バリデーション
           function validateName() {
             const name = $("#name").val().trim();
-            const pattern = /^[\u3040-\u30FF\u4E00-\u9FFF　]{1,19}$/;
+            const pattern = /^[\u3040-\u30FF\u4E00-\u9FFF\u30FB　]{1,19}$/;
             if (!pattern.test(name)) {
               showError(
                 "#error-name",
