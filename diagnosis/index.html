@@ -300,15 +300,22 @@
           // 4. 該当するタイプのスコアに加算
           console.log(scores);
 
-          const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]); // スコアの降順ソート
+          const typeMap = {
+            共鳴型: "kyomei",
+            探究型: "tankyu",
+            表現型: "hyougen",
+            体験型: "taiken",
+            挑戦型: "chousen",
+          };
 
-          const top1 = sorted[0][0]; // 1位のタイプ名
-          const top2 = sorted[1][0]; // 2位のタイプ名
+          const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
 
-          localStorage.setItem("top1", top1);
-          localStorage.setItem("top2", top2);
+          const top1 = sorted[0][0];
+          const top2 = sorted[1][0];
 
-          // 結果ページへ移動
+          localStorage.setItem("top1", typeMap[top1]);
+          localStorage.setItem("top2", typeMap[top2]);
+
           window.location.href = "result.html";
         });
       }
