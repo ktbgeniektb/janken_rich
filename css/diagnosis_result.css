@@ -62,7 +62,7 @@ body {
 }
 
 #top-image {
-    width: 90%;
+    width: 80%;
     height: auto;
     display: block;
     z-index: 1;
@@ -70,18 +70,10 @@ body {
     justify-content: ce;
 }
 
-/* .header-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.4);
-    背景が見づらい場合は半透明に
-    padding: 1rem 2rem;
+.header-text {
+    padding: 2.5rem 3rem;
     border-radius: 8px;
-} */
+}
 
 @keyframes lampGlow {
     0% {
@@ -114,4 +106,5 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 4rem;
 }
