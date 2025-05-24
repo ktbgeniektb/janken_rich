@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>診断結果</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="./../css/diagnosis_result.css" />
   </head>
   <body>
@@ -16,6 +17,10 @@
         <h1 id="main-type" class="fade-up"></h1>
         <p id="description" class="fade-up"></p>
       </div>
+    </section>
+
+    <section class="chart">
+      <canvas id="result-chart" width="300" height="300"></canvas>
     </section>
 
     <section class="result-section">
@@ -493,6 +498,14 @@
 
       const data = templates.find((t) => t.main === key);
       const types = data.main.split("_"); // ['kyomei', 'tankyu']
+      const scores = {
+        kyomei: Number(localStorage.getItem("kyomei")) || 0,
+        tankyu: Number(localStorage.getItem("tankyu")) || 0,
+        hyougen: Number(localStorage.getItem("hyougen")) || 0,
+        taiken: Number(localStorage.getItem("taiken")) || 0,
+        chosen: Number(localStorage.getItem("chosen")) || 0,
+      };
+
       const typeColors = {
         kyomei: "#58A7FF",
         tankyu: "#FFA94D",
@@ -507,6 +520,25 @@
         taiken: "体験型",
         chosen: "挑戦型",
       };
+      console.log(localStorage.getItem("kyomei"));
+      const ctx = document.getElementById("result-chart").getContext("2d");
+      const chart = new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: ["共鳴型", "探求型", "表現型", "体験型", "挑戦型"],
+          datasets: [
+            {
+              data: [
+                scores.kyomei,
+                scores.tankyu,
+                scores.hyougen,
+                scores.taiken,
+                scores.chosen,
+              ],
+            },
+          ],
+        },
+      });
 
       // console.log(data);
       // console.log(types[0]);
@@ -529,10 +561,10 @@
           `あなたの「ビジョンの源泉」は──<br>  <span style="color: ${
             typeColors[types[0]]
           }; font-weight: bold;">
-            ${typeLabels[types[0]]}</span>  ×
-          <span style="color: ${typeColors[types[1]]}; font-weight: bold;">
-            ${typeLabels[types[1]]}
-          </span>`
+                ${typeLabels[types[0]]}</span>  ×
+              <span style="color: ${typeColors[types[1]]}; font-weight: bold;">
+                ${typeLabels[types[1]]}
+              </span>`
         );
 
         $("#description").html(data.description);

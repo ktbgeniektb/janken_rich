@@ -221,104 +221,102 @@
     </section>
   </body>
   <script>
-    const choices = [
-      "まったくそう思わない",
-      "あまりそう思わない",
-      "どちらでもない",
-      "ややそう思う",
-      "とてもそう思う",
-    ];
+        const choices = [
+          "まったくそう思わない",
+          "あまりそう思わない",
+          "どちらでもない",
+          "ややそう思う",
+          "とてもそう思う",
+        ];
 
-    function showError(selector, message) {
-      $(selector).text(message).show();
-    }
+        function showError(selector, message) {
+          $(selector).text(message).show();
+        }
 
-    function clearError(selector) {
-      $(selector).text("").hide();
-    }
+        function clearError(selector) {
+          $(selector).text("").hide();
+        }
 
-    $(".question").each(function () {
-      const index = $(this).data("index");
-      const $choices = $(this).find(".choices");
+        $(".question").each(function () {
+          const index = $(this).data("index");
+          const $choices = $(this).find(".choices");
 
-      choices
-        .slice()
-        .reverse()
-        .forEach((label, i) => {
-          // <label><input type="radio" name="q0" value="1"> まったくそう思わない</label><br/>　の生成
-          const $label = $(
-            `<label><input type="radio" name="q${index}" value="${
-              i + 1
-            }"> ${label}</label><br/>`
-          );
-          $choices.append($label);
+          choices
+            .slice()
+            .reverse()
+            .forEach((label, i) => {
+              // <label><input type="radio" name="q0" value="1"> まったくそう思わない</label><br/>　の生成
+              const $label = $(
+                `<label><input type="radio" name="q${index}" value="${
+                  i + 1
+                }"> ${label}</label><br/>`
+              );
+              $choices.append($label);
+            });
         });
-    });
 
-    $("#end-diagnosis").on("click", function () {
-      let isValid = true;
+        $("#end-diagnosis").on("click", function () {
+          let isValid = true;
+
+          $(".question").each(function () {
+            const index = $(this).data("index");
+            const selected = $(`input[name="q${index}"]:checked`);
+            const $error = $(`#error-q${index}`);
+
+            if (selected.length === 0) {
+              $error.text("この質問に回答してください").show();
+              if (isValid) {
+                // 最初の未回答エラーにスクロール
+                $("html, body").animate(
+                  { scrollTop: $(this).offset().top - 100 },
+                  500
+                );
+              }
+              isValid = false;
+            } else {
+              $error.hide();
+            }
+          });
+
+    if (isValid == true) {
+      const scores = {
+        共鳴型: 0,
+        探究型: 0,
+        表現型: 0,
+        体験型: 0,
+        挑戦型: 0,
+      };
 
       $(".question").each(function () {
         const index = $(this).data("index");
-        const selected = $(`input[name="q${index}"]:checked`);
-        const $error = $(`#error-q${index}`);
-
-        if (selected.length === 0) {
-          $error.text("この質問に回答してください").show();
-          if (isValid) {
-            // 最初の未回答エラーにスクロール
-            $("html, body").animate(
-              { scrollTop: $(this).offset().top - 100 },
-              500
-            );
-          }
-          isValid = false;
-        } else {
-          $error.hide();
-        }
+        const category = $(this).data("category");
+        const value = parseInt($(`input[name="q${index}"]:checked`).val());
+        scores[category] += value;
       });
 
-      if (isValid == true) {
-        const scores = {
-          共鳴型: 0,
-          探究型: 0,
-          表現型: 0,
-          体験型: 0,
-          挑戦型: 0,
-        };
+      const typeMap = {
+        共鳴型: "kyomei",
+        探究型: "tankyu",
+        表現型: "hyougen",
+        体験型: "taiken",
+        挑戦型: "chosen",
+      };
 
-        $(".question").each(function () {
-          const index = $(this).data("index"); // ← 毎回更新！
-          const category = $(this).data("category"); // ← 毎回更新！
+      const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const top1 = sorted[0][0];
+      const top2 = sorted[1][0];
 
-          // この中でやること：
-          // 1. data-category を使って「どのタイプの質問か」を調べる
-          // 2. 選ばれたラジオボタン（input）から value を取り出す
-          value = parseInt($(`input[name="q${index}"]:checked`).val());
+      localStorage.setItem("top1", typeMap[top1]);
+      localStorage.setItem("top2", typeMap[top2]);
 
-          scores[category] += value;
-          // 4. 該当するタイプのスコアに加算
-          console.log(scores);
+      Object.entries(scores).forEach(([label, score]) => {
+        const key = typeMap[label];
+        localStorage.setItem(key, score);
+      });
 
-          const typeMap = {
-            共鳴型: "kyomei",
-            探究型: "tankyu",
-            表現型: "hyougen",
-            体験型: "taiken",
-            挑戦型: "chousen",
-          };
-
-          const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-
-          const top1 = sorted[0][0];
-          const top2 = sorted[1][0];
-
-          localStorage.setItem("top1", typeMap[top1]);
-          localStorage.setItem("top2", typeMap[top2]);
-
-          window.location.href = "result.html";
-        });
-      }
-    });
-  </script>
+      window.location.href = "result.html";
+    } 
+  });
+    </script>
+  </body>
 </html>
