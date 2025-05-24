@@ -499,20 +499,20 @@
           `あなたの「ビジョンの源泉」は──<br><span>${data.label}</span>`
         );
 
-        $("#description").text(data.description);
+        $("#description").html(data.description);
         $("#catch").text("🔎 特徴");
         $("#features").html(data.features.map((f) => `<li>${f}</li>`).join(""));
 
-        $("#moments").before("<p>🌱 ワクワクしやすい瞬間</p>");
+        $("#moments").before("");
         $("#moments").html(data.moments.map((f) => `<li>${f}</li>`).join(""));
 
-        $("#tips").before("<p>🎯 活かすヒント</p>");
+        $("#tips").before("");
         $("#tips").html(data.tips.map((f) => `<li>${f}</li>`).join(""));
 
-        $("#sub").before("<p>🔁 あなたの中に、こんな側面も…</p>");
+        $("#sub").before("");
         $("#sub").text(data.sub);
       } else {
-        $("body").prepend("<p>診断結果が見つかりませんでした。</p>");
+        $("body").prepend("");
       }
     });
   </script>
