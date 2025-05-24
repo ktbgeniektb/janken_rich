@@ -541,9 +541,9 @@
                 scores.taiken,
                 scores.chosen,
               ],
-              backgroundColor: "rgba(254, 240, 138, 0.6)",
-              borderColor: "#rgba(254, 240, 138, 1.0)",
-              pointBackgroundColor: "#rgba(254, 240, 138, 1.0)",
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              borderColor: "#fff",
+              pointBackgroundColor: "#fff",
             },
           ],
         },
@@ -565,6 +565,13 @@
               pointLabels: {
                 font: {
                   size: 14,
+                },
+              },
+              grid: {
+                circular: false,
+                color: function (ctx) {
+                  // ctx.index: グリッドの位置インデックス（0 = min, 1 = 5, ..., 4 = 20）
+                  return ctx.index === 4 ? "#FFD700" : "rgba(255,255,255,0.2)";
                 },
               },
             },
