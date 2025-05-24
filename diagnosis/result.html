@@ -11,10 +11,10 @@
     <section class="result-header">
       <div class="header-image-container">
         <img id="top-image" src="" alt="診断結果画像" />
-        <div class="header-text">
-          <h1 id="main-type"></h1>
-          <p id="description"></p>
-        </div>
+      </div>
+      <div class="header-text">
+        <h1 id="main-type" class="fade-up"></h1>
+        <p id="description" class="fade-up"></p>
       </div>
     </section>
 
@@ -492,11 +492,47 @@
       // console.log(Object.keys(templates));
 
       const data = templates.find((t) => t.main === key);
-      console.log(data);
+      const types = data.main.split("_"); // ['kyomei', 'tankyu']
+      const typeColors = {
+        kyomei: "#58A7FF",
+        tankyu: "#FFA94D",
+        hyougen: "#FFD93D",
+        taiken: "#4DD599",
+        chosen: "#FF5F5F",
+      };
+      const typeLabels = {
+        kyomei: "共鳴型",
+        tankyu: "探求型",
+        hyougen: "表現型",
+        taiken: "体験型",
+        chosen: "挑戦型",
+      };
+
+      // console.log(data);
+      // console.log(types[0]);
+
+      $("#top-image").addClass("lamp-appear");
+
+      $(window).on("scroll", function () {
+        $(".fade-up").each(function () {
+          if (
+            $(this).offset().top <
+            $(window).scrollTop() + $(window).height() * 0.8
+          ) {
+            $(this).addClass("active");
+          }
+        });
+      });
 
       if (data) {
         $("#main-type").html(
-          `あなたの「ビジョンの源泉」は──<br><span>${data.label}</span>`
+          `あなたの「ビジョンの源泉」は──<br>  <span style="color: ${
+            typeColors[types[0]]
+          }; font-weight: bold;">
+            ${typeLabels[types[0]]}</span>  ×
+          <span style="color: ${typeColors[types[1]]}; font-weight: bold;">
+            ${typeLabels[types[1]]}
+          </span>`
         );
 
         $("#description").html(data.description);

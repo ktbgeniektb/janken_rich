@@ -11,10 +11,8 @@ body {
     margin-bottom: 2.5rem;
 }
 
-#main-type span {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #ffd700;
+#main-type {
+    z-index: 2;
 }
 
 .result-section {
@@ -63,9 +61,10 @@ body {
     width: 100%;
     height: auto;
     display: block;
+    z-index: 1;
 }
 
-.header-text {
+/* .header-text {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -73,7 +72,33 @@ body {
     color: white;
     text-align: center;
     background: rgba(0, 0, 0, 0.4);
-    /* 背景が見づらい場合は半透明に */
+    背景が見づらい場合は半透明に
     padding: 1rem 2rem;
     border-radius: 8px;
+} */
+
+@keyframes lampGlow {
+    0% {
+        filter: brightness(0.5) blur(5px);
+        opacity: 0;
+    }
+
+    100% {
+        filter: brightness(1.2) blur(0);
+        opacity: 1;
+    }
+}
+
+.lamp-appear {
+    animation: lampGlow 1.8s ease-out forwards;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+.fade-up.active {
+  opacity: 1;
+  transform: translateY(0);
 }
