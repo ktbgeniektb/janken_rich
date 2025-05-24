@@ -246,13 +246,12 @@
             .reverse()
             .forEach((label, i) => {
               // <label><input type="radio" name="q0" value="1"> まったくそう思わない</label><br/>　の生成
-              const $label = $(
-                `<label><input type="radio" name="q${index}" value="${
-                  i + 1
-                }"> ${label}</label><br/>`
-              );
-              $choices.append($label);
-            });
+            const score = choices.length - i; // 最大が5になる
+            const $label = $(
+              `<label><input type="radio" name="q${index}" value="${score}"> ${label}</label><br/>`
+            );
+            $choices.append($label);
+          });
         });
 
         $("#end-diagnosis").on("click", function () {

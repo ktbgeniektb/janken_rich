@@ -20,7 +20,7 @@
     </section>
 
     <section class="chart">
-      <canvas id="result-chart" width="300" height="300"></canvas>
+      <canvas id="result-chart" width="500" height="500"></canvas>
     </section>
 
     <section class="result-section">
@@ -520,7 +520,13 @@
         taiken: "体験型",
         chosen: "挑戦型",
       };
+
       console.log(localStorage.getItem("kyomei"));
+      console.log(localStorage.getItem("tankyu"));
+      console.log(localStorage.getItem("hyougen"));
+      console.log(localStorage.getItem("taiken"));
+      console.log(localStorage.getItem("chosen"));
+
       const ctx = document.getElementById("result-chart").getContext("2d");
       const chart = new Chart(ctx, {
         type: "radar",
@@ -535,8 +541,34 @@
                 scores.taiken,
                 scores.chosen,
               ],
+              backgroundColor: "rgba(88, 167, 255, 0.2)", // 任意
+              borderColor: "#58A7FF", // 任意
+              pointBackgroundColor: "#58A7FF", // 任意
             },
           ],
+        },
+        options: {
+          responsive: false,
+          plugins: {
+            legend: {
+              display: false, // ← これで凡例非表示
+            },
+          },
+          scales: {
+            r: {
+              min: 0,
+              max: 20, // ←ここで最大値を指定！
+              ticks: {
+                stepSize: 5, // 任意（5刻みなど）
+                backdropColor: "transparent", // 背景を透明にする（見栄え調整用）
+              },
+              pointLabels: {
+                font: {
+                  size: 14,
+                },
+              },
+            },
+          },
         },
       });
 
@@ -561,10 +593,12 @@
           `あなたの「ビジョンの源泉」は──<br>  <span style="color: ${
             typeColors[types[0]]
           }; font-weight: bold;">
-                ${typeLabels[types[0]]}</span>  ×
-              <span style="color: ${typeColors[types[1]]}; font-weight: bold;">
-                ${typeLabels[types[1]]}
-              </span>`
+                      ${typeLabels[types[0]]}</span>  ×
+                    <span style="color: ${
+                      typeColors[types[1]]
+                    }; font-weight: bold;">
+                      ${typeLabels[types[1]]}
+                    </span>`
         );
 
         $("#description").html(data.description);
